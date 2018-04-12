@@ -13,34 +13,6 @@ var action = process.argv[2];
 var content = process.argv[3];
 var logFile = "log.txt";
 
-switch (action) {
-    case "my-tweets":
-        twitter();
-        break;
-
-    case "spotify-this-song":
-        spotifyThis(content);
-        break;
-
-    case "movie-this":
-        movieThis(content);
-        break;
-
-    case "do-what-it-says":
-        random();
-        break;
-}
-
-function twitter() {
-    client.get('statuses/user_timeline', {
-        count: 20
-    }, function (error, tweets, response) {
-        if (error) throw error;
-        for (i in tweets) {
-            logActivity(tweets[i].created_at + '\n' + tweets[i].text);
-        }
-    });
-}
 
 function spotifyThis(song) {
     if (song) {
@@ -90,6 +62,24 @@ function spotifyThis(song) {
     }
 }
 
+switch (action) {
+    case "my-tweets":
+        twitter();
+        break;
+
+    case "spotify-this-song":
+        spotifyThis(content);
+        break;
+
+    case "movie-this":
+        movieThis(content);
+        break;
+
+    case "do-what-it-says":
+        random();
+        break;
+}
+
 function movieThis(movie) {
    
     if (!movie) { 
@@ -112,6 +102,17 @@ function movieThis(movie) {
         else if (error) {
             return logActivity(error);
           }
+    });
+}
+
+function twitter() {
+    client.get('statuses/user_timeline', {
+        count: 20
+    }, function (error, tweets, response) {
+        if (error) throw error;
+        for (i in tweets) {
+            logActivity(tweets[i].created_at + '\n' + tweets[i].text);
+        }
     });
 }
 
