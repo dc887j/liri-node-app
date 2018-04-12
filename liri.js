@@ -11,7 +11,7 @@ var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 var action = process.argv[2];
 var content = process.argv[3];
-var logFile = "log.txt";
+
 
 
 function spotifyThis(song) {
@@ -91,13 +91,14 @@ function movieThis(movie) {
     request(queryUrl, function (error, response, body) {
         if (!error && response.statusCode === 200) {
             logActivity("The title of the movie is: " + JSON.parse(body).Title);
-            logActivity("Release Year: " + JSON.parse(body).Year);
-            logActivity("IMDB Rating: " + JSON.parse(body).imdbRating);
+            logActivity("Actors in the movie: " + JSON.parse(body).Actors);
             logActivity("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
+            logActivity("IMDB Rating: " + JSON.parse(body).imdbRating);
+            logActivity("Release Year: " + JSON.parse(body).Year);
             logActivity("Produced in: " + JSON.parse(body).Country);
             logActivity("Language of the movie: " + JSON.parse(body).Language);
             logActivity("Plot of the movie: " + JSON.parse(body).Plot);
-            logActivity("Actors in the movie: " + JSON.parse(body).Actors);
+            
         }
         else if (error) {
             return logActivity(error);
@@ -149,16 +150,3 @@ function random(){
 
 }
 
-function logActivity(logItem) {
-
-    console.log(logItem);
-    
-    fs.appendFile(logFile, logItem+"\n", function(err) {
-
-        // If an error was experienced we say it.
-        if (err) {
-            console.log(err);
-        }
-
-    });
-}
